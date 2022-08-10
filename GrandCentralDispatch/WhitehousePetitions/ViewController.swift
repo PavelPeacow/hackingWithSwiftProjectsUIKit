@@ -16,7 +16,7 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let urlString: String
+        
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(credits))
         
@@ -26,21 +26,10 @@ class ViewController: UITableViewController {
         
         navigationItem.leftBarButtonItems = [filterBtn, undoBtn]
         
-        if navigationController?.tabBarItem.tag == 0 {
-            urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
-        } else {
-            urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
-        }
         
-        if let url = URL(string: urlString) {
-            if let data = try? Data(contentsOf: url) {
-                parce(json: data)
-                filterPetitions = petitions
-                return
-            }
-        }
         
-        showError()
+        performSelector(inBackground: #selector(fetchJSON), with: nil)
+        
         
         
         title = "Petitions"
@@ -71,14 +60,36 @@ class ViewController: UITableViewController {
         
         if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
             petitions = jsonPetitions.results
-            tableView.reloadData()
+            tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
+        } else {
+            performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
         }
     }
     
-    func showError() {
+    @objc func fetchJSON() {
+        let urlString: String
+        
+        if navigationController?.tabBarItem.tag == 0 {
+            urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
+        } else {
+            urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
+        }
+        
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+                self.parce(json: data)
+                self.filterPetitions = self.petitions
+                return
+            }
+        }
+        
+        performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
+    }
+    
+    @objc func showError() {
         let ac = UIAlertController(title: "Loading error", message: "Oppsy", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .cancel))
-        present(ac, animated: true)
+        self.present(ac, animated: true)
     }
     
     @objc func credits() {
@@ -100,23 +111,16 @@ class ViewController: UITableViewController {
         
         present(ac, animated: true)
         
-        
         func submit(_ answer: String) {
-            DispatchQueue.global().async {
-                self.filterPetitions.removeAll()
-                for petition in self.petitions {
-                    if petition.title.lowercased().contains(answer) || petition.body.lowercased().contains(answer) {
-                        self.filterPetitions.append(petition)
-                    }
+            filterPetitions.removeAll()
+            for petition in petitions {
+                if petition.title.lowercased().contains(answer) || petition.body.lowercased().contains(answer) {
+                    filterPetitions.append(petition)
                 }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-               
-                
             }
+            tableView.reloadData()
+            
         }
-        
     }
     
     @objc func undo() {
