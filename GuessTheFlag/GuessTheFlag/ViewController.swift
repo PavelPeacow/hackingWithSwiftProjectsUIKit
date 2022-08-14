@@ -19,9 +19,14 @@ class ViewController: UIViewController {
     var correctAnswer = 0
     
     var count = 0
+    var record = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let savedRecord = UserDefaults.standard.integer(forKey: "record")
+        record = savedRecord
+        
         
         button1.layer.borderWidth = 1
         button2.layer.borderWidth = 1
@@ -55,18 +60,26 @@ class ViewController: UIViewController {
             title = "Correct"
             score += 1
             count += 1
+            if count > record {
+                
+                let ac = UIAlertController(title: "You beat a record", message: "Your previous record was \(record)", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Rock-and-roll", style: .default, handler: askQuestion))
+                record = count
+                present(ac, animated: true)
+            }
+            save()
         } else {
             title = "Wrong! That's flag of \(countries[sender.tag].uppercased())"
             score -= 1
             count += 1
         }
         
-        if count == 10 {
-            title = "Game over"
-            
-            score = 0
-            count = 0
-        }
+//        if count == 10 {
+//            title = "Game over"
+//
+//            score = 0
+//            count = 0
+//        }
         
         let ac = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
@@ -74,9 +87,13 @@ class ViewController: UIViewController {
     }
     
     @objc func showScore() {
-        let ac = UIAlertController(title: "Score", message: "Your score is \(score)", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Score", message: "Your score is \(score), record is \(record)", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
+    }
+    
+    func save() {
+        UserDefaults.standard.set(record, forKey: "record")
     }
     
 }

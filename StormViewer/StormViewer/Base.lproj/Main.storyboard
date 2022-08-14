@@ -18,14 +18,14 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Picture" textLabel="WWr-XX-JLc" style="IBUITableViewCellStyleDefault" id="XQ3-Uy-JuZ">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="59.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XQ3-Uy-JuZ" id="C1m-9Y-whM">
-                                    <rect key="frame" x="0.0" y="0.0" width="385.5" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="385.5" height="59.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WWr-XX-JLc">
-                                            <rect key="frame" x="20" y="0.0" width="357.5" height="43.5"/>
+                                            <rect key="frame" x="20" y="0.0" width="357.5" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                             <nil key="textColor"/>
@@ -55,16 +55,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wim-1d-gVa">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="320"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1Y5-g0-If7"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="wim-1d-gVa" firstAttribute="top" secondItem="1Y5-g0-If7" secondAttribute="top" id="NZC-ev-grr"/>
-                            <constraint firstItem="wim-1d-gVa" firstAttribute="bottom" secondItem="1Y5-g0-If7" secondAttribute="bottom" id="pPI-sc-vQw"/>
-                            <constraint firstItem="wim-1d-gVa" firstAttribute="centerX" secondItem="El6-OQ-diH" secondAttribute="centerX" id="w2B-xa-te6"/>
-                            <constraint firstItem="wim-1d-gVa" firstAttribute="leading" secondItem="1Y5-g0-If7" secondAttribute="leading" id="y7Y-1P-L0M"/>
+                            <constraint firstItem="wim-1d-gVa" firstAttribute="top" secondItem="1Y5-g0-If7" secondAttribute="top" id="2uV-Gf-jtY"/>
+                            <constraint firstItem="wim-1d-gVa" firstAttribute="leading" secondItem="1Y5-g0-If7" secondAttribute="leading" id="3gC-vF-B9H"/>
+                            <constraint firstItem="1Y5-g0-If7" firstAttribute="bottom" secondItem="wim-1d-gVa" secondAttribute="bottom" constant="498" id="EIk-2q-eiW"/>
+                            <constraint firstItem="wim-1d-gVa" firstAttribute="centerX" secondItem="El6-OQ-diH" secondAttribute="centerX" id="Lne-Vi-2iq"/>
                         </constraints>
                     </view>
                     <connections>

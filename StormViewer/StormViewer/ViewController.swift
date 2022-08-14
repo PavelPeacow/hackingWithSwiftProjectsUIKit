@@ -11,11 +11,18 @@ class ViewController: UITableViewController {
     
     var pictures = [String]()
 
+    var count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         performSelector(inBackground: #selector(loadImages), with: nil)
         tableView.reloadData()
+        
+        if let savedcount = UserDefaults.standard.object(forKey: "loh") as? [Int] {
+            count = savedcount
+        }
+        
         
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -33,9 +40,12 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            saveCountView(index: indexPath)
+            
             vc.selectedImage = pictures[indexPath.row]
             vc.countImages = pictures.count
             vc.selectedImageIndex = indexPath.row + 1
+            vc.viewCount = count[indexPath.item]
             
             navigationController?.pushViewController(vc, animated: true)
         }
@@ -53,6 +63,14 @@ class ViewController: UITableViewController {
         }
         
         pictures.sort()
+    }
+    
+    func saveCountView(index: IndexPath) {
+        count[index.item] += 1
+        UserDefaults.standard.set(count, forKey: "loh")
+        let savedCount = UserDefaults.standard.object(forKey: "loh") as? [Int]
+        print(savedCount!)
+        
     }
 
 }
