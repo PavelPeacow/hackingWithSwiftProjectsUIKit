@@ -28,6 +28,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
         
         context = CIContext()
         currentFilter = CIFilter(name: "CISepiaTone")
+        
+        
     }
     
     @objc func importPicture() {
@@ -40,6 +42,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let image = info[.editedImage] as? UIImage else { return }
         
+        imageVIew.alpha = 0
         
         currentImage = image
         dismiss(animated: true)
@@ -110,6 +113,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate & UINavi
            if let cgimg = context.createCGImage(currentFilter.outputImage!, from: currentFilter.outputImage!.extent) {
                let processedImage = UIImage(cgImage: cgimg)
                self.imageVIew.image = processedImage
+               UIView.animate(withDuration: 1, delay: 0) {
+                   self.imageVIew.alpha = 1
+               }
            }
     }
     
